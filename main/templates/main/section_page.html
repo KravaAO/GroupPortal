@@ -1,172 +1,95 @@
-<!doctype html>
-<html lang="uk" data-theme="light">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ section.title }}</title>
-  <style>
-    :root {
-      --bg: #f7f7f4;
-      --text: #15213b;
-      --card: #ffffff;
-      --border: #d8dfeb;
-      --shadow: rgba(21, 33, 59, 0.12);
-      --btn-bg: #15213b;
-      --btn-text: #ffffff;
-      --gradient-a: #f7f7f4;
-      --gradient-b: #dfe9ff;
-    }
+{% extends 'main/base.html' %}
 
-    [data-theme="dark"] {
-      --bg: #0d1425;
-      --text: #f2f5ff;
-      --card: #18233b;
-      --border: #2d3c5f;
-      --shadow: rgba(0, 0, 0, 0.35);
-      --btn-bg: #f2f5ff;
-      --btn-text: #0d1425;
-      --gradient-a: #0d1425;
-      --gradient-b: #1c315d;
-    }
+{% block title %}{{ section.title }} | GroupPortal{% endblock %}
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: Segoe UI, Tahoma, sans-serif;
-      background: radial-gradient(circle at top right, var(--gradient-b), var(--gradient-a) 45%, var(--bg) 80%);
-      color: var(--text);
-      transition: background-color .2s ease, color .2s ease;
-    }
+{% block extra_css %}
+<style>
+.container {
+  max-width: 1000px;
+  margin: 36px auto 80px;
+  padding: 0 16px;
+}
 
-    .container {
-      max-width: 1000px;
-      margin: 36px auto 80px;
-      padding: 0 16px;
-    }
+.hero {
+  background: color-mix(in oklab, var(--card) 84%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px var(--shadow);
+}
 
-    .hero {
-      background: color-mix(in oklab, var(--card) 84%, transparent);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 12px 30px var(--shadow);
-    }
+.hero img {
+  width: 100%;
+  height: min(48vw, 360px);
+  min-height: 220px;
+  object-fit: cover;
+  display: block;
+}
 
-    .hero img {
-      width: 100%;
-      height: min(48vw, 360px);
-      min-height: 220px;
-      object-fit: cover;
-      display: block;
-    }
+.hero-content {
+  padding: 22px;
+}
 
-    .hero-content {
-      padding: 22px;
-    }
+.hero h1 {
+  margin: 0 0 10px;
+  font-size: clamp(26px, 4vw, 42px);
+}
 
-    .hero h1 {
-      margin: 0 0 10px;
-      font-size: clamp(26px, 4vw, 42px);
-    }
+.hero p {
+  margin: 0;
+  line-height: 1.65;
+  font-size: 17px;
+  opacity: .95;
+}
 
-    .hero p {
-      margin: 0;
-      line-height: 1.65;
-      font-size: 17px;
-      opacity: .95;
-    }
+.actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
 
-    .actions {
-      margin-top: 20px;
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-weight: 600;
+  transition: transform .2s ease, opacity .2s ease;
+}
 
-    .btn {
-      display: inline-block;
-      text-decoration: none;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 10px 18px;
-      font-weight: 600;
-      transition: transform .2s ease, opacity .2s ease;
-    }
+.btn-primary {
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border-color: transparent;
+}
 
-    .btn-primary {
-      background: var(--btn-bg);
-      color: var(--btn-text);
-      border-color: transparent;
-    }
+.btn-secondary {
+  background: transparent;
+  color: var(--text);
+}
 
-    .btn-secondary {
-      background: transparent;
-      color: var(--text);
-    }
+.btn:hover,
+.btn:focus-visible {
+  transform: translateY(-2px);
+  opacity: .95;
+}
+</style>
+{% endblock %}
 
-    .btn:hover,
-    .btn:focus-visible {
-      transform: translateY(-2px);
-      opacity: .95;
-    }
-
-    .theme-toggle {
-      position: fixed;
-      right: 16px;
-      bottom: 16px;
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      border: 1px solid var(--border);
-      background: var(--btn-bg);
-      color: var(--btn-text);
-      font-size: 22px;
-      cursor: pointer;
-      box-shadow: 0 6px 20px rgba(0,0,0,.2);
-      z-index: 9999;
-    }
-
-    .theme-toggle:focus-visible {
-      outline: 2px solid var(--text);
-      outline-offset: 2px;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <article class="hero">
-      <img src="{{ section.image }}" alt="{{ section.title }}" />
-      <div class="hero-content">
-        <h1>{{ section.title }}</h1>
-        <p>{{ section.description }}</p>
-        <div class="actions">
-          <a class="btn btn-primary" href="{% url 'home' %}">На головну</a>
-          <a class="btn btn-secondary" href="{% url 'section_page' section.slug %}">Оновити сторінку</a>
-        </div>
+{% block content %}
+<div class="container">
+  <article class="hero">
+    <img src="{{ section.image }}" alt="{{ section.title }}" />
+    <div class="hero-content">
+      <h1>{{ section.title }}</h1>
+      <p>{{ section.description }}</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="{% url 'home' %}">На головну</a>
+        <a class="btn btn-secondary" href="{% url 'section_page' section.slug %}">Оновити сторінку</a>
       </div>
-    </article>
-  </div>
-
-  <button id="themeToggle" class="theme-toggle" aria-label="Змінити тему" aria-pressed="false" title="Змінити тему">🌙</button>
-
-  <script>
-    (function () {
-      const root = document.documentElement;
-      const btn = document.getElementById('themeToggle');
-      const saved = localStorage.getItem('theme') || 'light';
-
-      root.setAttribute('data-theme', saved);
-      btn.textContent = saved === 'dark' ? '☀️' : '🌙';
-      btn.setAttribute('aria-pressed', String(saved === 'dark'));
-
-      btn.addEventListener('click', function () {
-        const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-        root.setAttribute('data-theme', next);
-        localStorage.setItem('theme', next);
-        btn.textContent = next === 'dark' ? '☀️' : '🌙';
-        btn.setAttribute('aria-pressed', String(next === 'dark'));
-      });
-    })();
-  </script>
-</body>
-</html>
+    </div>
+  </article>
+</div>
+{% endblock %}

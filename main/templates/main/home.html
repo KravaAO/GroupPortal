@@ -1,178 +1,102 @@
-<!doctype html>
-<html lang="uk" data-theme="light">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GroupPortal - Головна</title>
-  <style>
-    :root {
-      --bg: #f7f7f4;
-      --text: #15213b;
-      --card: #ffffff;
-      --border: #d8dfeb;
-      --shadow: rgba(21, 33, 59, 0.12);
-      --btn-bg: #15213b;
-      --btn-text: #ffffff;
-      --gradient-a: #f7f7f4;
-      --gradient-b: #dfe9ff;
-    }
+{% extends 'main/base.html' %}
 
-    [data-theme="dark"] {
-      --bg: #0d1425;
-      --text: #f2f5ff;
-      --card: #18233b;
-      --border: #2d3c5f;
-      --shadow: rgba(0, 0, 0, 0.35);
-      --btn-bg: #f2f5ff;
-      --btn-text: #0d1425;
-      --gradient-a: #0d1425;
-      --gradient-b: #1c315d;
-    }
+{% block title %}GroupPortal - Головна{% endblock %}
 
-    body {
-      margin: 0;
-      font-family: Segoe UI, Tahoma, sans-serif;
-      background: radial-gradient(circle at top right, var(--gradient-b), var(--gradient-a) 45%, var(--bg) 80%);
-      color: var(--text);
-      transition: background-color .2s ease, color .2s ease;
-    }
+{% block extra_css %}
+<style>
+.container {
+  max-width: 1120px;
+  margin: 40px auto 80px;
+  padding: 0 16px;
+}
 
-    .container {
-      max-width: 1120px;
-      margin: 40px auto 80px;
-      padding: 0 16px;
-    }
+.header-card {
+  background: color-mix(in oklab, var(--card) 82%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px;
+  margin-bottom: 24px;
+  box-shadow: 0 12px 28px var(--shadow);
+  backdrop-filter: blur(6px);
+}
 
-    .header-card {
-      background: color-mix(in oklab, var(--card) 82%, transparent);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 28px;
-      margin-bottom: 24px;
-      box-shadow: 0 12px 28px var(--shadow);
-      backdrop-filter: blur(6px);
-    }
+.header-card h1 {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 44px);
+}
 
-    .header-card h1 {
-      margin: 0;
-      font-size: clamp(28px, 4vw, 44px);
-    }
+.header-card p {
+  margin: 10px 0 0;
+  max-width: 700px;
+  line-height: 1.55;
+  opacity: .9;
+}
 
-    .header-card p {
-      margin: 10px 0 0;
-      max-width: 700px;
-      line-height: 1.55;
-      opacity: .9;
-    }
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+}
 
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 18px;
-    }
+.nav-card {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px var(--shadow);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
 
-    .nav-card {
-      text-decoration: none;
-      color: inherit;
-      display: block;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 10px 24px var(--shadow);
-      transition: transform .2s ease, box-shadow .2s ease;
-    }
+.nav-card:hover,
+.nav-card:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 34px var(--shadow);
+}
 
-    .nav-card:hover,
-    .nav-card:focus-visible {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 34px var(--shadow);
-    }
+.nav-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  display: block;
+}
 
-    .nav-card img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-      display: block;
-    }
+.nav-card-content {
+  padding: 16px;
+}
 
-    .nav-card-content {
-      padding: 16px;
-    }
+.nav-card h3 {
+  margin: 0 0 8px;
+  font-size: 20px;
+}
 
-    .nav-card h3 {
-      margin: 0 0 8px;
-      font-size: 20px;
-    }
+.nav-card p {
+  margin: 0;
+  line-height: 1.5;
+  opacity: .9;
+}
+</style>
+{% endblock %}
 
-    .nav-card p {
-      margin: 0;
-      line-height: 1.5;
-      opacity: .9;
-    }
-
-    .theme-toggle {
-      position: fixed;
-      right: 16px;
-      bottom: 16px;
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      border: 1px solid var(--border);
-      background: var(--btn-bg);
-      color: var(--btn-text);
-      font-size: 22px;
-      cursor: pointer;
-      box-shadow: 0 6px 20px rgba(0,0,0,.2);
-      z-index: 9999;
-    }
-
-    .theme-toggle:focus-visible {
-      outline: 2px solid var(--text);
-      outline-offset: 2px;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="header-card">
-      <h1>Ласкаво просимо в GroupPortal</h1>
-      <p>Оберіть розділ, щоб перейти на окрему сторінку з візуальним блоком та коротким описом.</p>
-    </div>
-
-    <div class="cards-grid">
-      {% for section in sections %}
-      <a class="nav-card" href="{% url 'section_page' section.slug %}">
-        <img src="{{ section.image }}" alt="{{ section.title }}" loading="lazy" />
-        <div class="nav-card-content">
-          <h3>{{ section.title }}</h3>
-          <p>{{ section.description }}</p>
-        </div>
-      </a>
-      {% endfor %}
-    </div>
+{% block content %}
+<div class="container">
+  <div class="header-card">
+    <h1>Ласкаво просимо в GroupPortal</h1>
+    <p>Оберіть розділ, щоб перейти на окрему сторінку з візуальним блоком та коротким описом.</p>
   </div>
 
-  <button id="themeToggle" class="theme-toggle" aria-label="Змінити тему" aria-pressed="false" title="Змінити тему">🌙</button>
-
-  <script>
-    (function () {
-      const root = document.documentElement;
-      const btn = document.getElementById('themeToggle');
-      const saved = localStorage.getItem('theme') || 'light';
-
-      root.setAttribute('data-theme', saved);
-      btn.textContent = saved === 'dark' ? '☀️' : '🌙';
-      btn.setAttribute('aria-pressed', String(saved === 'dark'));
-
-      btn.addEventListener('click', function () {
-        const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-        root.setAttribute('data-theme', next);
-        localStorage.setItem('theme', next);
-        btn.textContent = next === 'dark' ? '☀️' : '🌙';
-        btn.setAttribute('aria-pressed', String(next === 'dark'));
-      });
-    })();
-  </script>
-</body>
-</html>
+  <div class="cards-grid">
+    {% for section in sections %}
+    <a class="nav-card" href="{% url 'section_page' section.slug %}">
+      <img src="{{ section.image }}" alt="{{ section.title }}" loading="lazy" />
+      <div class="nav-card-content">
+        <h3>{{ section.title }}</h3>
+        <p>{{ section.description }}</p>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
