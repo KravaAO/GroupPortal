@@ -1,5 +1,7 @@
 from django.contrib import messages
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import redirect, render
 
 from .forms import SignUpForm, UserUpdateForm
@@ -16,6 +18,24 @@ def register(request):
     else:
         form = SignUpForm()
     return render(request, "users/register.html", {"form": form})
+
+
+def login_view(request):
+    if request.method == "POST":
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            login(request, form.get_user())
+            messages.success(request, "You have successfully logged in.")
+            return redirect("profile")
+    else:
+        form = AuthenticationForm()
+    return render(request, "users/login.html", {"form": form})
+
+
+def logout_view(request):
+    logout(request)
+    messages.info(request, "You have been logged out.")
+    return redirect("login")
 
 
 @login_required
