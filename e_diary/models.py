@@ -9,6 +9,9 @@ class Diary(models.Model):
     """
     user_profile = models.OneToOneField(User,on_delete= models.CASCADE)
     #username = User.get_username()
+
+    def __str__(self):
+        return self.user_profile.username
     
 class Grade(models.Model):
     """
@@ -18,6 +21,7 @@ class Grade(models.Model):
     user_profile = models.ForeignKey(Diary,on_delete=models.CASCADE,related_name="grades")
     grade = models.SmallIntegerField()
     messege = models.TextField(default = "")
+
     def __str__(self):
-        return str(self.user_profile)
+        return f"{self.user_profile}: {self.grade}"
 

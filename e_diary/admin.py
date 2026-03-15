@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from e_diary.models import Diary, Grade
+
+
+admin.site.register(Diary)
+admin.site.register(Grade)

@@ -1,6 +1,10 @@
-from django.forms import ModelForm , Form,IntegerField,CharField
+from django import forms
 
-class add_grade(ModelForm):
-    grade = IntegerField()
-    messege = CharField()
+from e_diary.models import Grade
+
+
+class add_grade(forms.ModelForm):
+    class Meta:
+        model = Grade
+        fields = ["grade", "messege"]
 

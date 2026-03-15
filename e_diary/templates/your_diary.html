@@ -2,15 +2,17 @@
 <!DOCTYPE html>
 <html>
     <head>
-	
+	<title>Your diary</title>
     </head>
     <body>
-	aaa
+	<h1>Your grades</h1>
 	{%for grade in grades%}
 	    <p>
 		{{grade.grade}}
 	    </p>
 	    <p>{{grade.messege}}</p>
+	{% empty %}
+	    <p>No grades yet.</p>
 	{%endfor %}
     </body>
                                                                                                                      
