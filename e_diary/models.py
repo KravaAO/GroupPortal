@@ -8,7 +8,7 @@ class Diary(models.Model):
          -через grades прописуеться звязок між таблицями оцінок та таблицею щоденника
     """
     user_profile = models.OneToOneField(User,on_delete= models.CASCADE)
-    username = User.get_username()
+    #username = User.get_username()
     
 class Grade(models.Model):
     """
@@ -18,6 +18,6 @@ class Grade(models.Model):
     user_profile = models.ForeignKey(Diary,on_delete=models.CASCADE,related_name="grades")
     grade = models.SmallIntegerField()
     messege = models.TextField(default = "")
-    def __str__():
-        return user_profile
+    def __str__(self):
+        return str(self.user_profile)
 
