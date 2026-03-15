@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <link rel="stylesheet" href="{% static 'profile/settings.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container mt-5 ">
+        <div class=" row justify-content-center">
+            <div class="col-lg-9 ">
+                <div class=" card shadow-lg p-4 rounded-4" style="background-color: rgb(171, 181, 228);">
+                    <nav class="navbar-expand-lg mb-3" style="background-color: #a1a9e0; border-radius: 15px;">
+                        <p class="d-flex justify-content-center fs-1 text-dark">Settings</p>
+                    </nav>
+                    <div class="row align-items-center">
+                        <div class="col-md-4 text-center  ">
+                            <img src="{{ user.profile.avatar_url }}" class="rounded-circle mb-3" width="150"
+                                height="150" style="object-fit: cover;">
+
+                            <h5 class="mt-2">{{ user.username }}</h5>
+
+                            <form method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ form.avatar }}
+                                <label class="btn btn-outline-primary btn-sm">
+                                    Змінити фото
+                                    <input type="file" name="avatar" hidden onchange="this.form.submit()">
+                                </label>
+
+                                <button type="submit" name="reset_avatar" class="btn btn-outline-danger btn-sm">
+                                    Стандартне
+                                </button>
+
+                            </form>
+                        </div>
+                        <div class="col-md-8 ps-4 border-start">
+                            <h4 class="mb-3 fs-3">Інформація аккаунту</h4>
+
+                            <p><strong>Username:</strong> {{ user.username }}</p>
+                            <p><strong>Password:</strong> ••••••••</p>
+                            <p><strong>Email:</strong> {{ user.email }}</p>
+                            <h4 class="mt-4">Про себе:</h4>
+                            <form method="post" class="mb-3">
+                                {% csrf_token %}
+                                <div class="input-group mb-2">
+                                    <input type="text" name="bio" class="form-control" placeholder="Короткий опис..."
+                                        value="{{ profile.bio|default:'' }}">
+                                    <button type="submit" name="update_bio" class="btn btn-primary">Зберегти</button>
+                                </div>
+                            </form>
+                            <p><strong>Дата реєстрації:</strong>
+                                {{ user.date_joined|date:"d.m.Y" }}
+                            </p>
+
+                            <h4 class="mt-4">Соцмережі</h4>
+
+                            <form method="post" class="mb-3">
+                                {% csrf_token %}
+                                <div class="row g-2">
+                                    <div class="col-md-4">
+                                        {{ social_form.platform }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ social_form.url }}
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button name="add_social" class="btn btn-success w-100">
+                                            Додати
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <ul class="list-group">
+                                {% for link in social_links %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>
+                                        <strong>{{ link.platform|title }}</strong> —
+                                        <a href="{{ link.url }}" target="_blank">
+                                            <i class="fa-brands fa-{{ link.platform }}"></i>
+                                        </a>
+                                    </span>
+
+                                    <form method="post" style="margin: 0;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="link_id" value="{{ link.id }}">
+                                        <button name="delete_social" class="btn btn-sm btn-danger">
+                                            ✕
+                                        </button>
+                                    </form>
+                                </li>
+                                {% empty %}
+                                <li class="list-group-item text-muted">
+                                    Соцмережі не додані
+                                </li>
+                                {% endfor %}
+                            </ul>
+
+
+                            <button type="submit" class="btn btn-outline-secondary mt-3"><a
+                                    href="{% url 'account_settings' %}"
+                                    style="text-decoration: none; color: #000000;">Змінити дані</a></button>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

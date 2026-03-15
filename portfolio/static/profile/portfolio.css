@@ -1,0 +1,101 @@
+body {
+    background: radial-gradient(circle, rgb(53, 86, 155), rgb(41, 65, 117), rgb(29, 44, 79));
+    min-height: 100vh;
+}
+
+
+.card {
+    border: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15) !important;
+}
+
+.card-title {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.75rem;
+}
+
+.card-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #666;
+    word-wrap: break-word;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+}
+
+.btn-sm {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+}
+
+
+.posts-section {
+    margin-top: 2rem;
+}
+
+.posts-header {
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.posts-count {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+
+.alert-info {
+    background-color: #e7f3ff;
+    border: 1px solid #b3d9ff;
+    color: #004085;
+}
+
+.alert-info i {
+    margin-right: 0.5rem;
+}
+
+.form-control {
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    font-size: 0.95rem;
+}
+
+.form-control:focus {
+    border-color: #7a8aff;
+    box-shadow: 0 0 0 0.2rem rgba(112, 138, 255, 0.25);
+}
+
+
+@media (max-width: 768px) {
+    .card-body {
+        padding: 1rem;
+    }
+
+    .card-title {
+        font-size: 1.1rem;
+    }
+
+    .btn-sm {
+        padding: 0.35rem 0.6rem;
+        font-size: 0.8rem;
+    }
+}
