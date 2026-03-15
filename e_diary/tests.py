@@ -5,6 +5,11 @@ from e_diary.models import Diary, Grade
 
 
 class YourGradesViewTests(TestCase):
+    def test_login_page_is_available(self):
+        response = self.client.get("/accounts/login/")
+
+        self.assertEqual(response.status_code, 200)
+
     def test_anonymous_user_is_redirected_to_login(self):
         response = self.client.get("/newgrade/")
 

@@ -1,0 +1,11 @@
+{% extends "main/base.html" %}
+{% block title %}Delete Thread{% endblock %}
+{% block content %}
+  <h2>Delete Thread</h2>
+  <p>Are you sure you want to delete "{{ thread.title }}"?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, delete</button>
+    <a href="{% url 'forum:thread_detail' thread.pk %}">Cancel</a>
+  </form>
+{% endblock %}
