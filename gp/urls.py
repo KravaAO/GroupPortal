@@ -1,14 +1,10 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path
-from django.views.generic import RedirectView
+from django.urls import path
 
 urlpatterns = [
-    path("", RedirectView.as_view(pattern_name="login", permanent=False)),
-    path("admin/", admin.site.urls),
-    path("users/", include("users.urls")),
-    path("accounts/", include("django.contrib.auth.urls")),
+    path('admin/', admin.site.urls),
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,95 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{ section.title }} | GroupPortal{% endblock %}
+
+{% block extra_css %}
+<style>
+.container {
+  max-width: 1000px;
+  margin: 36px auto 80px;
+  padding: 0 16px;
+}
+
+.hero {
+  background: color-mix(in oklab, var(--card) 84%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px var(--shadow);
+}
+
+.hero img {
+  width: 100%;
+  height: min(48vw, 360px);
+  min-height: 220px;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-content {
+  padding: 22px;
+}
+
+.hero h1 {
+  margin: 0 0 10px;
+  font-size: clamp(26px, 4vw, 42px);
+}
+
+.hero p {
+  margin: 0;
+  line-height: 1.65;
+  font-size: 17px;
+  opacity: .95;
+}
+
+.actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-weight: 600;
+  transition: transform .2s ease, opacity .2s ease;
+}
+
+.btn-primary {
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border-color: transparent;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text);
+}
+
+.btn:hover,
+.btn:focus-visible {
+  transform: translateY(-2px);
+  opacity: .95;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <article class="hero">
+    <img src="{{ section.image }}" alt="{{ section.title }}" />
+    <div class="hero-content">
+      <h1>{{ section.title }}</h1>
+      <p>{{ section.description }}</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="{% url 'home' %}">На головну</a>
+        <a class="btn btn-secondary" href="{% url 'section_page' section.slug %}">Оновити сторінку</a>
+      </div>
+    </div>
+  </article>
+</div>
+{% endblock %}
