@@ -1,5 +1,5 @@
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 
 SECTIONS = [
@@ -72,6 +72,9 @@ def section_page(request, section_slug):
 	section = next((item for item in SECTIONS if item["slug"] == section_slug), None)
 	if section is None:
 		raise Http404("Сторінку не знайдено")
+
+	if section_slug == "calendar":
+		return redirect("event_calendar:month_view")
 
 	if section_slug == "developers":
 		return render(
