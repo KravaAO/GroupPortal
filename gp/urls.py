@@ -16,7 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from e_diary.views import Create_grade
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+    path("newgrade/",Create_grade.as_view()),
+    ]
