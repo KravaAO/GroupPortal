@@ -4,37 +4,48 @@ from .forms import EmailChangeForm, UsernameChangeForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
 from django.contrib.auth import update_session_auth_hash
-from .models import SocialLink
+from .models import Profile, SocialLink
 from .forms import SocialLinkForm
 from django.contrib.auth import authenticate, login, logout
 
 
-# @login_required
+@login_required
 def my_portfolio_view(request):
+    profile, _ = Profile.objects.get_or_create(user=request.user)
     social_links = SocialLink.objects.filter(user=request.user)
+    portfolio_user = {
+        "username": request.user.username,
+        "date_joined": request.user.date_joined,
+        "profile": profile,
+    }
 
     return render(
         request,
         "profile/portfolio.html",
-        {"user": request.user, "social_links": social_links},
+        {"user": portfolio_user, "social_links": social_links},
     )
 
 
-# @login_required
 def portfolio_view(request, username):
     user = get_object_or_404(User, username=username)
+    profile, _ = Profile.objects.get_or_create(user=user)
     social_links = SocialLink.objects.filter(user=user)
+    portfolio_user = {
+        "username": user.username,
+        "date_joined": user.date_joined,
+        "profile": profile,
+    }
 
     return render(
         request,
         "profile/portfolio.html",
-        {"user": user, "social_links": social_links},
+        {"user": portfolio_user, "social_links": social_links},
     )
 
 
-# @login_required
+@login_required
 def settings_view(request):
-    profile = request.user.profile
+    profile, _ = Profile.objects.get_or_create(user=request.user)
 
     if request.method == "POST":
         if "reset_avatar" in request.POST:
@@ -55,6 +66,12 @@ def settings_view(request):
 
     social_form = SocialLinkForm()
     social_links = SocialLink.objects.filter(user=request.user)
+    portfolio_user = {
+        "username": request.user.username,
+        "email": request.user.email,
+        "date_joined": request.user.date_joined,
+        "profile": profile,
+    }
 
     if request.method == "POST":
         if "add_social" in request.POST:
@@ -74,6 +91,7 @@ def settings_view(request):
         request,
         "profile/settings.html",
         {
+            "user": portfolio_user,
             "profile": profile,
             "social_form": social_form,
             "social_links": social_links,
@@ -81,7 +99,7 @@ def settings_view(request):
     )
 
 
-# @login_required
+@login_required
 def account_settings_view(request):
     username_form = UsernameChangeForm(instance=request.user)
     email_form = EmailChangeForm(instance=request.user)
