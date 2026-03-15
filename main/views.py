@@ -52,20 +52,14 @@ DEVELOPERS = [
 	{
 		"full_name": "Ковальов Назар Миколайович",
 		"role": "main",
-		"email": "nazark1306@groupportal.local",
+		"email": "nazark1306@gmail.com",
 		"photo": "/static/main/nazar.jpg",
 	},
 	{
-		"full_name": "Петренко Олена Сергіївна",
-		"role": "Frontend Developer",
-		"email": "petrenko@groupportal.local",
-		"photo": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80",
-	},
-	{
-		"full_name": "Коваль Андрій Михайлович",
-		"role": "UI/UX Designer",
-		"email": "koval@groupportal.local",
-		"photo": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80",
+		"full_name": "Кравчук Артем",
+		"role": "Лідер команди",
+		"email": "???@gmail.com",
+		"photo": "/static/main/artem.jpg",
 	},
 ]
 
