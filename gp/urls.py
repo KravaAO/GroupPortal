@@ -8,6 +8,7 @@ urlpatterns = [
     path('', include('main.urls')),
     path('admin/', admin.site.urls),
     path('forum/', include('forum.urls')),
+    path('calendar/', include('event_calendar.urls')),
     path('user/', include('users.urls')),
 ]
 

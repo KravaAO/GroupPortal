@@ -1,0 +1,122 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{ section.title }} | GroupPortal{% endblock %}
+
+{% block extra_css %}
+<style>
+.container {
+  max-width: 1100px;
+  margin: 36px auto 80px;
+  padding: 0 16px;
+}
+
+.page-header {
+  background: color-mix(in oklab, var(--card) 84%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 12px 30px var(--shadow);
+  margin-bottom: 22px;
+}
+
+.page-header h1 {
+  margin: 0 0 8px;
+  font-size: clamp(28px, 4vw, 42px);
+}
+
+.page-header p {
+  margin: 0;
+  line-height: 1.6;
+  opacity: .92;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+}
+
+.member-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px var(--shadow);
+}
+
+.member-card img {
+  width: 100%;
+  height: clamp(280px, 40vw, 420px);
+  object-fit: contain;
+  background: color-mix(in oklab, var(--card) 78%, white);
+  display: block;
+}
+
+.member-content {
+  padding: 16px;
+}
+
+.member-content h3 {
+  margin: 0 0 8px;
+  font-size: 20px;
+}
+
+.meta {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  opacity: .92;
+}
+
+.meta + .meta {
+  margin-top: 6px;
+}
+
+.actions {
+  margin-top: 22px;
+}
+
+.back-link {
+  display: inline-block;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 10px 18px;
+  color: var(--text);
+  font-weight: 600;
+  transition: transform .2s ease, opacity .2s ease;
+}
+
+.back-link:hover,
+.back-link:focus-visible {
+  transform: translateY(-2px);
+  opacity: .95;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <section class="page-header">
+    <h1>{{ section.title }}</h1>
+    <p>Команда, яка працювала над проєктом GroupPortal. Тут ви можете побачити фото, ПІБ та ролі учасників.</p>
+  </section>
+
+  <section class="team-grid" aria-label="Команда розробників">
+    {% for member in developers %}
+    <article class="member-card">
+      <img src="{{ member.photo }}" alt="{{ member.full_name }}" loading="lazy" />
+      <div class="member-content">
+        <h3>{{ member.full_name }}</h3>
+        <p class="meta"><strong>Роль:</strong> {{ member.role }}</p>
+        <p class="meta"><strong>Email:</strong> {{ member.email }}</p>
+      </div>
+    </article>
+    {% endfor %}
+  </section>
+
+  <div class="actions">
+    <a class="back-link" href="{% url 'home' %}">На головну</a>
+  </div>
+</div>
+{% endblock %}
