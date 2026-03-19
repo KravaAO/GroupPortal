@@ -89,7 +89,7 @@
 
   <div class="cards-grid">
     {% for section in sections %}
-    <a class="nav-card" href="{% url 'section_page' section.slug %}">
+    <a class="nav-card" href="{% if section.slug == 'calendar' %}{% url 'event_calendar:month_view' %}{% else %}{% url 'section_page' section.slug %}{% endif %}">
       <img src="{{ section.image }}" alt="{{ section.title }}" loading="lazy" />
       <div class="nav-card-content">
         <h3>{{ section.title }}</h3>
