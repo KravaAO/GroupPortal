@@ -12,24 +12,33 @@ from .forms import SocialLinkForm
 def my_portfolio_view(request):
     profile, _ = Profile.objects.get_or_create(user=request.user)
     social_links = SocialLink.objects.filter(user=request.user)
+    portfolio_user = {
+        "username": request.user.username,
+        "date_joined": request.user.date_joined,
+        "profile": profile,
+    }
 
     return render(
         request,
         "profile/portfolio.html",
-        {"portfolio_profile": profile, "social_links": social_links},
+        {"user": portfolio_user, "social_links": social_links},
     )
 
 
-@login_required
 def portfolio_view(request, username):
     user = get_object_or_404(User, username=username)
     profile, _ = Profile.objects.get_or_create(user=user)
     social_links = SocialLink.objects.filter(user=user)
+    portfolio_user = {
+        "username": user.username,
+        "date_joined": user.date_joined,
+        "profile": profile,
+    }
 
     return render(
         request,
         "profile/portfolio.html",
-        {"portfolio_profile": profile, "social_links": social_links},
+        {"user": portfolio_user, "social_links": social_links},
     )
 
 
@@ -56,6 +65,12 @@ def settings_view(request):
 
     social_form = SocialLinkForm()
     social_links = SocialLink.objects.filter(user=request.user)
+    portfolio_user = {
+        "username": request.user.username,
+        "email": request.user.email,
+        "date_joined": request.user.date_joined,
+        "profile": profile,
+    }
 
     if request.method == "POST":
         if "add_social" in request.POST:
@@ -75,6 +90,7 @@ def settings_view(request):
         request,
         "profile/settings.html",
         {
+            "user": portfolio_user,
             "profile": profile,
             "social_form": social_form,
             "social_links": social_links,
