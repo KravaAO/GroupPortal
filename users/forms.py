@@ -58,8 +58,8 @@ class UserUpdateForm(forms.ModelForm):
 
         profile.save()
         return user
-    
-    
+
+
 class SignUpForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User

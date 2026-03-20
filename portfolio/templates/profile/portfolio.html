@@ -1,56 +1,140 @@
+{% extends 'main/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Портфоліо</title>
-    <link rel="stylesheet" href="{% static 'profile/portfolio.css' %}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-
-<body>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-9">
-                <div class="card shadow-lg p-4" style="background-color: rgb(112, 138, 255);">
-                    <div class="row align-items-center">
-                        <div class="col-md-4 text-center ">
-                            <img src="{{ user.profile.avatar_url }}" class="rounded-circle mb-3" width="150"
-                                height="150" style="object-fit: cover;">
-
-                            <h5 class="mt-2">{{ user.username }}</h5>
+<link rel="stylesheet" href="{% static 'profile/portfolio.css' %}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+{% block extra_css %}
+<style>
+    body {
+        background: radial-gradient(circle, rgb(53, 86, 155), rgb(41, 65, 117), rgb(29, 44, 79));
+        min-height: 100vh;
+    }
 
 
+    .card {
+        border: none;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
 
+    .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    .card-title {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.75rem;
+    }
+
+    .card-text {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: #666;
+        word-wrap: break-word;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border: none;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+        transform: scale(1.05);
+    }
+
+    .btn-sm {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+    }
+
+
+    .posts-section {
+        margin-top: 2rem;
+    }
+
+    .posts-header {
+        color: #333;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .posts-count {
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+
+    .alert-info {
+        background-color: #e7f3ff;
+        border: 1px solid #b3d9ff;
+        color: #004085;
+    }
+
+    .alert-info i {
+        margin-right: 0.5rem;
+    }
+
+    .form-control {
+        border: 1px solid #ddd;
+        border-radius: 0.5rem;
+        padding: 0.75rem;
+        font-size: 0.95rem;
+    }
+
+    .form-control:focus {
+        border-color: #7a8aff;
+        box-shadow: 0 0 0 0.2rem rgba(112, 138, 255, 0.25);
+    }
+</style>
+{% endblock %}
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="card shadow-lg p-4" style="background-color: rgb(112, 138, 255);">
+                <div class="row align-items-center">
+                    <div class="col-md-4 text-center ">
+                        <img src="{{ portfolio_profile.avatar_url }}" class="rounded-circle mb-3" width="150"
+                            height="150" style="object-fit: fill;">
+
+                        <h5 class="mt-2">{{ portfolio_profile.user.username }}</h5>
+
+
+
+                    </div>
+                    <hr class="my-4">
+                    </hr>
+                    <div class="col-md-8 ps-4 border-start">
+                        <h4 class="mb-3 fs-3" style="text-align: center;">Інформація про користувача
+                        </h4>
+
+                        <h4>Про себе:</h4>
+                        <p>{{ portfolio_profile.bio|default:"Користувач не додав інформацію про себе." }}</p>
+
+                        <h4 class="mt-4">Соцмережі:</h4>
+                        <div class="social-icons mb-3 mt-3">
+                            {% for link in social_links %}
+                            <a href="{{ link.url }}" target="blank">
+                                <i class="fa-brands fa-{{ link.platform }} fa-2x  "></i>
+                            </a>
+                            {% empty %}
+                            <span class="text-muted">Немає доданих соцмереж</span>
+                            {% endfor %}
                         </div>
-                        <div class="col-md-8 ps-4 border-start">
-                            <h4 class="mb-3 fs-3" style="text-align: center; ">Інформація про користувача</h4>
-
-                            <h4>Про себе:</h4>
-                            <p>{{ user.profile.bio|default:"Користувач не додав інформацію про себе." }}</p>
-
-                            <h4 class="mt-4">Соцмережі:</h4>
-                            <div class="social-icons mb-3 mt-3">
-                                {% for link in social_links %}
-                                <a href="{{ link.url }}" target="blank">
-                                    <i class="fa-brands fa-{{ link.platform }} fa-2x  "></i>
-                                </a>
-                                {% empty %}
-                                <span class="text-muted">Немає доданих соцмереж</span>
-                                {% endfor %}
-                            </div>
-                            <p><strong>Дата реєстрації:</strong>
-                                {{ user.date_joined|date:"d.m.Y" }}
-                            </p>
-                        </div>
+                        <p><strong>Дата реєстрації:</strong>
+                            {{ portfolio_profile.user.date_joined|date:"d.m.Y" }}
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</body>
+</div>
 
-</html>
+{% endblock %}

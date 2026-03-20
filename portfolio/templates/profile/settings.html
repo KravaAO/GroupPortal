@@ -21,14 +21,13 @@
                     </nav>
                     <div class="row align-items-center">
                         <div class="col-md-4 text-center  ">
-                            <img src="{{ user.profile.avatar_url }}" class="rounded-circle mb-3" width="150"
-                                height="150" style="object-fit: cover;">
+                            <img src="{{ profile.avatar_url }}" class="rounded-circle mb-3" width="150"
+                                height="150" style="object-fit: fill;">
 
-                            <h5 class="mt-2">{{ user.username }}</h5>
+                            <h5 class="mt-2">{{ profile.user.username }}</h5>
 
                             <form method="POST" enctype="multipart/form-data">
                                 {% csrf_token %}
-                                {{ form.avatar }}
                                 <label class="btn btn-outline-primary btn-sm">
                                     Змінити фото
                                     <input type="file" name="avatar" hidden onchange="this.form.submit()">
@@ -43,9 +42,9 @@
                         <div class="col-md-8 ps-4 border-start">
                             <h4 class="mb-3 fs-3">Інформація аккаунту</h4>
 
-                            <p><strong>Username:</strong> {{ user.username }}</p>
+                            <p><strong>Username:</strong> {{ profile.user.username }}</p>
                             <p><strong>Password:</strong> ••••••••</p>
-                            <p><strong>Email:</strong> {{ user.email }}</p>
+                            <p><strong>Email:</strong> {{ profile.user.email }}</p>
                             <h4 class="mt-4">Про себе:</h4>
                             <form method="post" class="mb-3">
                                 {% csrf_token %}
@@ -56,7 +55,7 @@
                                 </div>
                             </form>
                             <p><strong>Дата реєстрації:</strong>
-                                {{ user.date_joined|date:"d.m.Y" }}
+                                {{ profile.user.date_joined|date:"d.m.Y" }}
                             </p>
 
                             <h4 class="mt-4">Соцмережі</h4>
