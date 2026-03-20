@@ -40,39 +40,33 @@ def portfolio_view(request, username):
         "profile/portfolio.html",
         {"user": portfolio_user, "social_links": social_links},
     )
-
-
 @login_required
 def settings_view(request):
     profile, _ = Profile.objects.get_or_create(user=request.user)
+    social_form = SocialLinkForm()
 
     if request.method == "POST":
+        uploaded_avatar = request.FILES.get("avatar")
+
         if "reset_avatar" in request.POST:
-            profile.avatar.delete(save=False)
+            if profile.avatar:
+                profile.avatar.delete(save=False)
             profile.avatar = None  # type: ignore
-            profile.save()
+            profile.save(update_fields=["avatar"])
             return redirect("settings")
 
-        if "avatar" in request.FILES:
-            profile.avatar = request.FILES["avatar"]
-            profile.save()
+        if uploaded_avatar:
+            if profile.avatar:
+                profile.avatar.delete(save=False)
+            profile.avatar = uploaded_avatar
+            profile.save(update_fields=["avatar"])
             return redirect("settings")
 
         if "update_bio" in request.POST:
             profile.bio = request.POST.get("bio", "")
-            profile.save()
+            profile.save(update_fields=["bio"])
             return redirect("settings")
 
-    social_form = SocialLinkForm()
-    social_links = SocialLink.objects.filter(user=request.user)
-    portfolio_user = {
-        "username": request.user.username,
-        "email": request.user.email,
-        "date_joined": request.user.date_joined,
-        "profile": profile,
-    }
-
-    if request.method == "POST":
         if "add_social" in request.POST:
             social_form = SocialLinkForm(request.POST)
             if social_form.is_valid():
@@ -85,6 +79,14 @@ def settings_view(request):
             link_id = request.POST.get("link_id")
             SocialLink.objects.filter(id=link_id, user=request.user).delete()
             return redirect("settings")
+
+    social_links = SocialLink.objects.filter(user=request.user)
+    portfolio_user = {
+        "username": request.user.username,
+        "email": request.user.email,
+        "date_joined": request.user.date_joined,
+        "profile": profile,
+    }
 
     return render(
         request,
