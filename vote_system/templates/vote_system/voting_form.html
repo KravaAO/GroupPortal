@@ -1,0 +1,29 @@
+{% extends "vote_system/base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-body">
+                <h3>🆕 Створити нове голосування</h3>
+                <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    
+    <hr>
+    <h5>Варіанти відповідей:</h5>
+    <div id="choices-container">
+        <input type="text" name="choices_text" class="form-control mb-2" placeholder="Варіант 1">
+        <input type="text" name="choices_text" class="form-control mb-2" placeholder="Варіант 2">
+        <input type="text" name="choices_text" class="form-control mb-2" placeholder="Варіант 3">
+    </div>
+
+    <div class="d-grid mt-4">
+        <button type="submit" class="btn btn-success">Створити опитування</button>
+    </div>
+</form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

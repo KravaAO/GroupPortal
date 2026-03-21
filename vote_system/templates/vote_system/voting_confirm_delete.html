@@ -1,0 +1,20 @@
+{% extends "vote_system/base.html" %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+        <div class="card border-danger shadow">
+            <div class="card-body text-center">
+                <h3 class="text-danger">Видалити голосування?</h3>
+                <p>Ви впевнені, що хочете видалити <strong>"{{ object.title }}"</strong>? Цю дію неможливо скасувати.</p>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger px-4">Так, видалити</button>
+                    <a href="{% url 'vote_system:voting_list' %}" class="btn btn-secondary px-4">Скасувати</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
