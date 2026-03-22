@@ -1,0 +1,96 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Календар | GroupPortal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'event_calendar/css/calendar.css' %}" />
+{% endblock %}
+
+{% block content %}
+<section class="calendar-wrap">
+  <header class="calendar-head">
+    <h1>Календар подій</h1>
+    <div class="calendar-nav" aria-label="Навігація по місяцях">
+      <a href="?year={{ prev_year }}&month={{ prev_month }}" class="month-link">Попередній</a>
+      <p class="month-title">{{ month_name }} {{ year }}</p>
+      <a href="?year={{ next_year }}&month={{ next_month }}" class="month-link">Наступний</a>
+    </div>
+  </header>
+
+  <div class="calendar-grid" role="table" aria-label="Календар місяця">
+    {% for day_name in week_day_names %}
+      <div class="weekday" role="columnheader">{{ day_name }}</div>
+    {% endfor %}
+
+    {% for week in weeks_data %}
+      {% for day in week %}
+        <article class="day-cell {% if not day.in_month %}outside{% endif %} {% if day.is_today %}today{% endif %}"
+                 data-date="{{ day.date|date:'Y-m-d' }}"
+                 role="button"
+                 tabindex="0"
+                 aria-label="{{ day.date.day }} — відкрити деталі">
+          <p class="day-number">{{ day.date.day }}</p>
+
+          <ul class="event-list">
+            {% for event in day.events %}
+              <li>
+                <strong>{{ event.title }}</strong>
+                {% if event.start_time %}
+                  <span>{{ event.start_time|time:"H:i" }}</span>
+                {% endif %}
+              </li>
+            {% empty %}
+            {% endfor %}
+          </ul>
+        </article>
+      {% endfor %}
+    {% endfor %}
+  </div>
+
+  <p class="calendar-note">Натисніть на будь-який день, щоб переглянути або додати подію.</p>
+</section>
+
+<!-- ===== Modal ===== -->
+<div id="eventModal" class="modal-overlay" hidden aria-modal="true" role="dialog" aria-labelledby="modalTitle">
+  <div class="modal-box">
+    <header class="modal-header">
+      <h2 id="modalTitle" class="modal-date"></h2>
+      <button class="modal-close" id="modalClose" aria-label="Закрити">✕</button>
+    </header>
+
+    <div id="modalEvents"></div>
+
+    <hr class="modal-divider" />
+
+    <section class="modal-form-section">
+      <h3>Нова подія</h3>
+      <form id="eventForm" novalidate>
+        {% csrf_token %}
+        <input type="hidden" id="eventDate" />
+        <div class="form-field">
+          <label for="eventTitle">Назва *</label>
+          <input id="eventTitle" type="text" required placeholder="Назва події" />
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="eventStart">Початок</label>
+            <input id="eventStart" type="time" />
+          </div>
+          <div class="form-field">
+            <label for="eventEnd">Кінець</label>
+            <input id="eventEnd" type="time" />
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="eventDesc">Опис</label>
+          <textarea id="eventDesc" rows="3" placeholder="Необов'язково"></textarea>
+        </div>
+        <div id="formError" class="form-error" hidden></div>
+        <button type="submit" class="btn-submit">Зберегти подію</button>
+      </form>
+    </section>
+  </div>
+</div>
+<script src="{% static 'event_calendar/js/calendar.js' %}"></script>
+{% endblock %}

@@ -56,4 +56,18 @@ class VotingDeleteView(LoginRequiredMixin,DeleteView):
     def get_queryset(self):
         return super().get_queryset().filter(author=self.request.user)
 
+    def votes(request, pk):
+        voting = get_object_or_404(Voting, pk=pk)
+    
+        if not voting.is_active():
+            return redirect('vote_system:voting_detail', pk=pk)
 
+        if request.method == 'POST':
+            selected_choice_id = request.POST.get('choice')
+            if selected_choice_id:
+                choice = get_object_or_404(Choice, id=selected_choice_id)
+                choice.votes_count += 1
+                choice.save()
+                return redirect('vote_system:voting_detail', pk=pk)
+            
+   

@@ -6,24 +6,28 @@
         <div class="col-md-8">
             <div class="card shadow">
                 <div class="card-body">
-                    <h2 class="text-primary">{{ voting.title }}</h2>
-                    <p class="text-muted">{{ voting.description }}</p>
-                    <hr>
-                    
-                    <form method="post">
-                        {% csrf_token %}
-                        {% for choice in voting.choices.all %}
-                            <div class="form-check mb-3">
-                                <input class="form-check-input" type="radio" name="choice" id="choice{{ choice.id }}" value="{{ choice.id }}" required>
-                                <label class="form-check-label fs-5" for="choice{{ choice.id }}">
-                                    {{ choice.choice_text }}
-                                </label>
-                            </div>
-                        {% endfor %}
-                        
-                        <div class="d-grid mt-4">
-                            <button type="submit" class="btn btn-success btn-lg">Підтвердити мій голос</button>
-                        </div>
+    <h3>{{ voting.title }}</h3>
+    <p>{{ voting.description }}</p>
+
+    {% if voting.is_active %}
+        <form action="{% url 'vote_system:vote' voting.id %}" method="post">
+            {% csrf_token %}
+            {% for choice in voting.choices.all %}
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+                    <label class="form-check-label" for="choice{{ forloop.counter }}">
+                        {{ choice.choice_text }}
+                    </label>
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-success w-100 mt-3">Підтвердити мій голос</button>
+        </form>
+    {% else %}
+        <div class="alert alert-warning mt-3">
+            <i class="bi bi-clock-history"></i> Голосування завершене {{ voting.expires_at|date:"d.m.Y H:i" }}.
+        </div>
+    {% endif %}
+</div>
                     </form>
                 </div>
             </div>
