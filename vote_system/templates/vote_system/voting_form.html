@@ -1,28 +1,32 @@
-{% extends "vote_system/base.html" %}
+{% extends "main/base.html" %}
+
+{% block title %}Створити голосування - GroupPortal{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card shadow">
-            <div class="card-body">
-                <h3>🆕 Створити нове голосування</h3>
-                <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    
-    <hr>
-    <h5>Варіанти відповідей:</h5>
-    <div id="choices-container">
-        <input type="text" name="choices_text" class="form-control mb-2" placeholder="Варіант 1">
-        <input type="text" name="choices_text" class="form-control mb-2" placeholder="Варіант 2">
-        <input type="text" name="choices_text" class="form-control mb-2" placeholder="Варіант 3">
-    </div>
+<div style="max-width: 1120px; margin: 2rem auto; padding: 0 1rem;">
+    <div style="max-width: 600px; margin: 0 auto;">
+        <div style="border: 1px solid var(--border); border-radius: 0.75rem; padding: 2rem; background: var(--card); box-shadow: 0 1px 3px var(--shadow);">
+            <h3 style="margin: 0 0 1.5rem 0;">🆕 Створити нове голосування</h3>
+            <form method="post">
+                {% csrf_token %}
+                
+                <div style="margin-bottom: 1.5rem;">
+                    {{ form.as_p }}
+                </div>
+                
+                <hr style="margin: 1.5rem 0;">
+                
+                <h5 style="margin: 0 0 1rem 0;">Варіанти відповідей:</h5>
+                <div id="choices-container">
+                    <input type="text" name="choices_text" class="form-control" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 0.5rem; margin-bottom: 0.75rem; font-family: inherit; font-size: inherit;" placeholder="Варіант 1">
+                    <input type="text" name="choices_text" class="form-control" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 0.5rem; margin-bottom: 0.75rem; font-family: inherit; font-size: inherit;" placeholder="Варіант 2">
+                    <input type="text" name="choices_text" class="form-control" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 0.5rem; margin-bottom: 0.75rem; font-family: inherit; font-size: inherit;" placeholder="Варіант 3">
+                </div>
 
-    <div class="d-grid mt-4">
-        <button type="submit" class="btn btn-success">Створити опитування</button>
-    </div>
-</form>
-            </div>
+                <div style="margin-top: 2rem;">
+                    <button type="submit" style="width: 100%; background: #15213b; color: white; padding: 0.75rem; border: none; border-radius: 0.5rem; font-weight: 600; cursor: pointer; font-size: 1rem;">Створити опитування</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
