@@ -1,0 +1,368 @@
+.calendar-wrap {
+  max-width: 1180px;
+  margin: 28px auto 70px;
+  padding: 0 16px;
+}
+
+.calendar-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: end;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.calendar-head h1 {
+  margin: 0;
+  font-size: clamp(30px, 4vw, 44px);
+}
+
+.calendar-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.month-title {
+  margin: 0;
+  min-width: 170px;
+  text-align: center;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.month-link {
+  text-decoration: none;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 8px 14px;
+  background: color-mix(in oklab, var(--card) 90%, transparent);
+  transition: transform .2s ease, opacity .2s ease;
+}
+
+.month-link:hover,
+.month-link:focus-visible {
+  transform: translateY(-2px);
+  opacity: .95;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.weekday {
+  text-align: center;
+  font-weight: 700;
+  padding: 8px;
+  border-radius: 10px;
+  background: color-mix(in oklab, var(--card) 85%, transparent);
+  border: 1px solid var(--border);
+}
+
+.day-cell {
+  min-height: 125px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--card) 90%, transparent);
+  box-shadow: 0 8px 20px var(--shadow);
+  padding: 10px;
+  cursor: pointer;
+  transition: box-shadow .15s ease, transform .15s ease;
+}
+
+.day-cell:hover,
+.day-cell:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px var(--shadow);
+  outline: none;
+}
+
+.day-cell.outside {
+  opacity: .55;
+}
+
+.day-cell.today {
+  outline: 2px solid var(--text);
+}
+
+.day-number {
+  margin: 0 0 8px;
+  font-weight: 700;
+}
+
+.event-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
+}
+
+.event-list li {
+  display: grid;
+  gap: 2px;
+  background: color-mix(in oklab, var(--gradient-b) 42%, var(--card));
+  border-radius: 8px;
+  padding: 7px;
+  font-size: 13px;
+}
+
+.event-list span {
+  opacity: .8;
+}
+
+.calendar-note {
+  margin-top: 14px;
+  opacity: .9;
+}
+
+@media (max-width: 860px) {
+  .calendar-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .weekday {
+    display: none;
+  }
+
+  .day-cell {
+    min-height: 110px;
+  }
+}
+
+@media (max-width: 500px) {
+  .calendar-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-nav {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .month-title {
+    min-width: 0;
+    flex: 1;
+  }
+}
+
+/* ===== Modal ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0, 0, 0, .48);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal-overlay[hidden] {
+  display: none;
+}
+
+.modal-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 24px 60px var(--shadow);
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.modal-date {
+  margin: 0;
+  font-size: 20px;
+}
+
+.modal-close {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  cursor: pointer;
+  font-size: 16px;
+  color: var(--text);
+  line-height: 1;
+  transition: background .15s ease;
+}
+
+.modal-close:hover {
+  background: color-mix(in oklab, var(--border) 60%, transparent);
+}
+
+.modal-events-list {
+  display: grid;
+  gap: 8px;
+}
+
+.modal-event-item {
+  background: color-mix(in oklab, var(--gradient-b) 42%, var(--card));
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+
+.event-item-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.modal-event-item strong {
+  display: block;
+  flex: 1;
+}
+
+.btn-delete-event {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 2px 6px;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1;
+  color: var(--text);
+  opacity: .6;
+  flex-shrink: 0;
+  transition: opacity .15s ease, background .15s ease;
+}
+
+.btn-delete-event:hover {
+  opacity: 1;
+  background: color-mix(in oklab, #c0392b 14%, var(--card));
+  border-color: #c0392b;
+}
+
+.modal-event-item .event-meta {
+  font-size: 13px;
+  opacity: .8;
+}
+
+.modal-event-item .event-desc {
+  font-size: 13px;
+  margin: 4px 0 0;
+  opacity: .8;
+}
+
+.modal-no-events {
+  opacity: .7;
+  font-style: italic;
+  margin: 0;
+}
+
+.modal-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+.modal-form-section h3 {
+  margin: 0 0 14px;
+}
+
+.form-field {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.form-field label {
+  font-size: 13px;
+  font-weight: 600;
+  opacity: .9;
+}
+
+.form-field input,
+.form-field textarea {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-size: 15px;
+  background: color-mix(in oklab, var(--bg) 60%, var(--card));
+  color: var(--text);
+  width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.form-field textarea {
+  resize: vertical;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.form-error {
+  font-size: 14px;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: #c0392b;
+  background: color-mix(in oklab, #c0392b 12%, var(--card));
+}
+
+[data-theme="dark"] .form-error {
+  color: #e74c3c;
+}
+
+.form-success {
+  font-size: 14px;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #1a7a3c;
+  background: color-mix(in oklab, #27ae60 14%, var(--card));
+}
+
+[data-theme="dark"] .form-success {
+  color: #2ecc71;
+}
+
+.btn-submit {
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border: none;
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  font-family: inherit;
+  transition: opacity .2s ease;
+}
+
+.btn-submit:hover {
+  opacity: .85;
+}
+
+.btn-submit:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}

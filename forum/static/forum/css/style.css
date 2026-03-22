@@ -1,0 +1,24 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0 1rem;
+}
+header h1 a {
+    text-decoration: none;
+    color: #333;
+}
+ul {
+     list-style-type: none; padding: 0; 
+    }
+li { 
+    margin-bottom: 1rem; 
+}
+.message { 
+    padding: .5rem; margin-bottom: .5rem; border-radius: 3px; 
+}
+.message.success { 
+    background: #d4edda; color: #155724; 
+}
+.message.error { 
+    background: #f8d7da; color: #721c24; 
+}

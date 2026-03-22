@@ -1,0 +1,36 @@
+{% extends "main/base.html" %}
+{% block title %}{{ thread.title }}{% endblock %}
+{% block content %}
+  <h2>{{ thread.title }}</h2>
+  <p>started by {{ thread.created_by }} on {{ thread.created_at|date:"SHORT_DATE_FORMAT" }}</p>
+
+  {% if user.is_authenticated and user.is_staff %}
+    <p>
+      <a href="{% url 'forum:edit_thread' thread.pk %}">Edit</a> |
+      <a href="{% url 'forum:delete_thread' thread.pk %}">Delete</a>
+    </p>
+  {% endif %}
+
+  <h3>Messages</h3>
+  <ul>
+  {% for post in posts %}
+    <li>
+      <p>{{ post.body|linebreaks }}</p>
+      <small>by {{ post.created_by }} on {{ post.created_at|date:"SHORT_DATETIME_FORMAT" }}</small>
+    </li>
+  {% empty %}
+    <li>Be the first to reply!</li>
+  {% endfor %}
+  </ul>
+
+  {% if user.is_authenticated %}
+    <h3>Leave a message</h3>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Post</button>
+    </form>
+  {% else %}
+    <p><a href="{% url 'login' %}">Log in</a> to post a message.</p>
+  {% endif %}
+{% endblock %}
