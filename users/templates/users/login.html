@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+    <div class="from-container">
+        <h2>Login</h2>
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="input-box">
+                {{ form.username }}
+                <span>Username</span>
+            </div>
+            
+            <div class="input-box">
+                {{ form.password }}
+                <span>Password</span>
+            </div>
+
+            <button type="submit" class="submit-btn">Login</button>
+        </form>
+    </div>
+</body>
+</html>

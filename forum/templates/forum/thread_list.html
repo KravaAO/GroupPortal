@@ -1,0 +1,18 @@
+{% extends "main/base.html" %}
+{% block title %}Threads{% endblock %}
+{% block content %}
+  <h2>All Threads</h2>
+  {% if user.is_authenticated and user.is_staff %}
+    <p><a href="{% url 'forum:create_thread' %}">Create new thread</a></p>
+  {% endif %}
+  <ul>
+  {% for thread in threads %}
+    <li>
+      <a href="{% url 'forum:thread_detail' thread.pk %}">{{ thread.title }}</a>
+      <small>by {{ thread.created_by }} on {{ thread.created_at|date:"SHORT_DATE_FORMAT" }}</small>
+    </li>
+  {% empty %}
+    <li>No threads yet.</li>
+  {% endfor %}
+  </ul>
+{% endblock %}
