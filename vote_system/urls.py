@@ -9,4 +9,4 @@ urlpatterns = [
     path('<int:pk>/', views.VotingDetailView.as_view(),name='voting_detail'),
     path('<int:pk>/delete/',views.VotingDeleteView.as_view(),name='voting_delete'),
     path('<int:pk>/vote/', views.votes,name='votes')
-]
+]git 
