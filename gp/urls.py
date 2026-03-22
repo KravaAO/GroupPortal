@@ -10,5 +10,6 @@ urlpatterns = [
     path('forum/', include('forum.urls')),
     path('calendar/', include('event_calendar.urls')),
     path('user/', include('users.urls')),
+    path('e_diary',include('e_diary.urls'))
 ]
 

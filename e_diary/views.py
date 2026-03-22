@@ -12,3 +12,6 @@ class your_grades(View,LoginRequiredMixin):
         return render(request,"your_diary.html",{"grades" : all_grades})
     def post(self,request):
         return render(request,"your_diary.html")
+class teacher_crud(View):
+    def get():
+        ...
