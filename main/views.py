@@ -1,4 +1,5 @@
 from django.http import Http404
+from django.contrib.auth import get_user_model
 from django.shortcuts import redirect, render
 
 
@@ -61,6 +62,30 @@ DEVELOPERS = [
 		"email": "???@gmail.com",
 		"photo": "/static/main/artem.jpg",
 	},
+	{
+		"full_name": "Ніколетта Ланґур",
+		"role": "Користувачі",
+		"email": "???@gmail.com",
+		"photo": "/static/main/nikoleta.jpg",
+	},
+	{
+		"full_name": "Олег Атрасевич",
+		"role": "Портфоліо",
+		"email": "???@gmail.com",
+		"photo": "/static/main/oleg.jpg",
+	},
+	{
+		"full_name": "Нікіта Зубенко",
+		"role": "Пости",
+		"email": "???@gmail.com",
+		"photo": "/static/main/o.jpg",
+	},
+	{
+		"full_name": "Кіріл Хлібородов",
+		"role": "менеджер щоденника",
+		"email": "???@gmail.com",
+		"photo": "/static/main/kiril.jpg",
+	},
 ]
 
 
@@ -77,10 +102,32 @@ def section_page(request, section_slug):
 		return redirect("event_calendar:month_view")
 
 	if section_slug == "developers":
+		User = get_user_model()
+		users = User.objects.filter(is_active=True).order_by("username")
+
+		developers_from_db = []
+		for user in users:
+			full_name = user.get_full_name().strip() if hasattr(user, "get_full_name") else ""
+			display_name = full_name or user.username
+			role = "Адміністратор" if user.is_superuser else ("Модератор" if user.is_staff else "Учасник")
+			email = user.email or "Не вказано"
+			photo = f"https://ui-avatars.com/api/?name={display_name.replace(' ', '+')}&background=1f2937&color=ffffff&size=512"
+
+			developers_from_db.append(
+				{
+					"full_name": display_name,
+					"role": role,
+					"email": email,
+					"photo": photo,
+				}
+			)
+
+		developers = developers_from_db if developers_from_db else DEVELOPERS
+
 		return render(
 			request,
 			"main/developers_page.html",
-			{"section": section, "developers": DEVELOPERS},
+			{"section": section, "developers": developers},
 		)
 
 	return render(request, "main/section_page.html", {"section": section})
