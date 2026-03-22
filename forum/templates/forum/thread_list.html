@@ -1,18 +1,27 @@
 {% extends "main/base.html" %}
-{% block title %}Threads{% endblock %}
-{% block content %}
-  <h2>All Threads</h2>
-  {% if user.is_authenticated and user.is_staff %}
-    <p><a href="{% url 'forum:create_thread' %}">Create new thread</a></p>
-  {% endif %}
-  <ul>
-  {% for thread in threads %}
-    <li>
-      <a href="{% url 'forum:thread_detail' thread.pk %}">{{ thread.title }}</a>
-      <small>by {{ thread.created_by }} on {{ thread.created_at|date:"SHORT_DATE_FORMAT" }}</small>
-    </li>
-  {% empty %}
-    <li>No threads yet.</li>
-  {% endfor %}
-  </ul>
+{% block title %}Пости{% endblock %}
+{% block forum_content %}
+  <div class="d-flex flex-column flex-md-row align-items-start justify-content-between gap-3 mb-4">
+    <h2 class="mb-0">Всі пости</h2>
+    {% if user.is_authenticated and user.is_staff %}
+      <a class="btn btn-primary" href="{% url 'forum:create_thread' %}">Створити новий пост</a>
+    {% endif %}
+  </div>
+
+  <div class="list-group">
+    {% for thread in threads %}
+      <a
+        href="{% url 'forum:thread_detail' thread.pk %}"
+        class="list-group-item list-group-item-action d-flex justify-content-between align-items-start"
+      >
+        <div>
+          <div class="fw-semibold">{{ thread.title }}</div>
+          <div class="text-muted small">by {{ thread.created_by }}</div>
+        </div>
+        <span class="badge bg-secondary rounded-pill">{{ thread.created_at|date:"SHORT_DATE_FORMAT" }}</span>
+      </a>
+    {% empty %}
+      <div class="list-group-item">Поки що немає постів.</div>
+    {% endfor %}
+  </div>
 {% endblock %}
