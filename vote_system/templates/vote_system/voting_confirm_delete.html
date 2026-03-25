@@ -1,0 +1,20 @@
+{% extends "main/base.html" %}
+
+{% block title %}Видалити голосування - GroupPortal{% endblock %}
+
+{% block content %}
+<div style="max-width: 1120px; margin: 3rem auto; padding: 0 1rem;">
+    <div style="max-width: 600px; margin: 0 auto;">
+        <div style="border: 2px solid #d32f2f; border-radius: 0.75rem; padding: 2rem; background: var(--card); box-shadow: 0 1px 3px var(--shadow); text-align: center;">
+            <h3 style="margin: 0 0 1rem 0; color: #d32f2f;">Видалити голосування?</h3>
+            <p style="margin: 0 0 2rem 0; color: rgba(21, 33, 59, 0.8);">Ви впевнені, що хочете видалити <strong>"{{ object.title }}"</strong>? Цю дію неможливо скасувати.</p>
+            
+            <form method="post" style="display: flex; gap: 1rem; justify-content: center;">
+                {% csrf_token %}
+                <button type="submit" style="background: #d32f2f; color: white; padding: 0.75rem 2rem; border: none; border-radius: 0.5rem; font-weight: 600; cursor: pointer; font-size: 1rem;">Так, видалити</button>
+                <a href="{% url 'vote_system:voting_list' %}" style="background: rgba(21, 33, 59, 0.1); color: #15213b; padding: 0.75rem 2rem; border: none; border-radius: 0.5rem; font-weight: 600; cursor: pointer; font-size: 1rem; text-decoration: none; display: inline-block;">Скасувати</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

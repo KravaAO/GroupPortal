@@ -7,6 +7,7 @@ urlpatterns = [
     path('favicon.ico', RedirectView.as_view(url=static('main/favicon.png'), permanent=True)),
     path('', include('main.urls')),
     path('admin/', admin.site.urls),
+    path('votes/', include('vote_system.urls')),
     path('forum/', include('forum.urls')),
     path('calendar/', include('event_calendar.urls')),
     path('user/', include('users.urls')),

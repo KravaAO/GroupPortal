@@ -1,11 +1,19 @@
 {% extends "main/base.html" %}
-{% block title %}Delete Thread{% endblock %}
-{% block content %}
-  <h2>Delete Thread</h2>
-  <p>Are you sure you want to delete "{{ thread.title }}"?</p>
-  <form method="post">
-    {% csrf_token %}
-    <button type="submit">Yes, delete</button>
-    <a href="{% url 'forum:thread_detail' thread.pk %}">Cancel</a>
-  </form>
+{% block title %}Видалити Пост{% endblock %}
+{% block forum_content %}
+  <div class="d-flex flex-column flex-md-row align-items-start justify-content-between gap-3 mb-4">
+    <h2 class="mb-0">Видалити Пост</h2>
+    <a class="btn btn-outline-secondary" href="{% url 'forum:thread_detail' thread.pk %}">Назад до посту</a>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <p>Ви впевнені що хочете видалити пост "<strong>{{ thread.title }}</strong>"?</p>
+      <form method="post" class="d-flex gap-2">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Так, видалити</button>
+        <a class="btn btn-outline-secondary" href="{% url 'forum:thread_detail' thread.pk %}">Скасувати</a>
+      </form>
+    </div>
+  </div>
 {% endblock %}
