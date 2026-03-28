@@ -1,0 +1,17 @@
+{% load static %}
+{% extends main/base.html %}
+<!DOCTYPE html>
+<html>
+    <head>
+	
+    </head>
+    <body>
+	{%for grade in grades%}
+	    <p>
+		{{grade.grade}}
+	    </p>
+	    <p>{{grade.messege}}</p>
+	{%endfor %}
+    </body>
+                                                                                                                     
+</html>

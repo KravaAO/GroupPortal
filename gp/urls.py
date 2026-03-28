@@ -23,6 +23,7 @@ from django.urls import include, path
 from django.views.generic.base import RedirectView
 
 urlpatterns = [
+<<<<<<< HEAD
     path(
         "favicon.ico",
         RedirectView.as_view(url=static_url("main/favicon.png"), permanent=True),
@@ -33,6 +34,16 @@ urlpatterns = [
     path("forum/", include("forum.urls")),
     path("calendar/", include("event_calendar.urls")),
     path("user/", include("users.urls")),
+=======
+    path('favicon.ico', RedirectView.as_view(url=static('main/favicon.png'), permanent=True)),
+    path('', include('main.urls')),
+    path('admin/', admin.site.urls),
+    path('votes/', include('vote_system.urls')),
+    path('forum/', include('forum.urls')),
+    path('calendar/', include('event_calendar.urls')),
+    path('user/', include('users.urls')),
+    path('e_diary/',include('e_diary.urls'))
+>>>>>>> 19068e2248396c84f1c1809a090834156d241537
 ]
 
 if settings.DEBUG:

@@ -1,11 +1,21 @@
 {% extends "main/base.html" %}
-{% block title %}{{ action }} Thread{% endblock %}
-{% block content %}
-  <h2>{{ action }} Thread</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">{{ action }}</button>
-    <a href="{% url 'forum:thread_list' %}">Cancel</a>
-  </form>
+{% block title %}{{ action }} Пост{% endblock %}
+{% block forum_content %}
+  <div class="d-flex flex-column flex-md-row align-items-start justify-content-between gap-3 mb-4">
+    <h2 class="mb-0">{{ action }} Пост</h2>
+    <a class="btn btn-outline-secondary" href="{% url 'forum:thread_list' %}">Назад до постів</a>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <form method="post" class="forum-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary">{{ action }}</button>
+          <a class="btn btn-outline-secondary" href="{% url 'forum:thread_list' %}">Скасувати</a>
+        </div>
+      </form>
+    </div>
+  </div>
 {% endblock %}

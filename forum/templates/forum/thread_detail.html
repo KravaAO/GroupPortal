@@ -1,36 +1,51 @@
 {% extends "main/base.html" %}
 {% block title %}{{ thread.title }}{% endblock %}
-{% block content %}
-  <h2>{{ thread.title }}</h2>
-  <p>started by {{ thread.created_by }} on {{ thread.created_at|date:"SHORT_DATE_FORMAT" }}</p>
+{% block forum_content %}
+  <div class="d-flex flex-column flex-md-row align-items-start justify-content-between gap-3 mb-4">
+    <div>
+      <h2 class="mb-1">{{ thread.title }}</h2>
+      <div class="text-muted small">started by {{ thread.created_by }} on {{ thread.created_at|date:"SHORT_DATE_FORMAT" }}</div>
+    </div>
 
-  {% if user.is_authenticated and user.is_staff %}
-    <p>
-      <a href="{% url 'forum:edit_thread' thread.pk %}">Edit</a> |
-      <a href="{% url 'forum:delete_thread' thread.pk %}">Delete</a>
-    </p>
-  {% endif %}
+    {% if user.is_authenticated and user.is_staff %}
+      <div class="btn-group">
+        <a class="btn btn-outline-secondary" href="{% url 'forum:edit_thread' thread.pk %}">Змінити</a>
+        <a class="btn btn-outline-danger" href="{% url 'forum:delete_thread' thread.pk %}">Видалити</a>
+      </div>
+    {% endif %}
+  </div>
 
-  <h3>Messages</h3>
-  <ul>
-  {% for post in posts %}
-    <li>
-      <p>{{ post.body|linebreaks }}</p>
-      <small>by {{ post.created_by }} on {{ post.created_at|date:"SHORT_DATETIME_FORMAT" }}</small>
-    </li>
-  {% empty %}
-    <li>Be the first to reply!</li>
-  {% endfor %}
-  </ul>
+  <div class="card mb-4">
+    <div class="card-body">
+      <h3 class="card-title mb-3">Повідомлення</h3>
+
+      {% if posts %}
+        <ul class="list-group list-group-flush">
+          {% for post in posts %}
+            <li class="list-group-item">
+              <p class="mb-2">{{ post.body|linebreaks }}</p>
+              <div class="text-muted small">by {{ post.created_by }} on {{ post.created_at|date:"SHORT_DATETIME_FORMAT" }}</div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="mb-0">Будьте першим, хто залишить відповідь!</p>
+      {% endif %}
+    </div>
+  </div>
 
   {% if user.is_authenticated %}
-    <h3>Leave a message</h3>
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Post</button>
-    </form>
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Залишити повідомлення</h3>
+        <form method="post" class="forum-form">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-primary">Пост</button>
+        </form>
+      </div>
+    </div>
   {% else %}
-    <p><a href="{% url 'login' %}">Log in</a> to post a message.</p>
+    <p><a class="btn btn-outline-primary" href="{% url 'login' %}">Увійдіть</a> щоб залишити коментар.</p>
   {% endif %}
 {% endblock %}
