@@ -15,9 +15,9 @@ class Grade(models.Model):
         Модель для привязки запису оцінки до користувача
         включае в себе поле для оцінки (grade) та для зауваження вчителя(messege) 
     """
-    user_profile = models.ForeignKey(Diary,on_delete=models.CASCADE,related_name="grades")
+    diary_connection = models.ForeignKey(Diary,on_delete=models.CASCADE,related_name="grades")
     grade = models.SmallIntegerField()
     messege = models.TextField(default = "")
     def __str__(self):
-        return str(self.user_profile)
+        return str(self.diary_connection)
 

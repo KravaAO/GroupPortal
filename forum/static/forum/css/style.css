@@ -1,24 +1,39 @@
-body {
-    font-family: sans-serif;
-    margin: 0;
-    padding: 0 1rem;
+/* Forum-specific customizations */
+
+:root {
+  --forum-bg: rgba(255, 255, 255, 0.8);
+  --forum-border: rgba(0, 0, 0, 0.08);
+  --forum-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
-header h1 a {
-    text-decoration: none;
-    color: #333;
+
+[data-theme="dark"] .forum-card,
+[data-theme="dark"] .forum-form textarea,
+[data-theme="dark"] .forum-form input {
+  background-color: rgba(15, 22, 38, 0.8) !important;
+  color: var(--text) !important;
 }
-ul {
-     list-style-type: none; padding: 0; 
-    }
-li { 
-    margin-bottom: 1rem; 
+
+.forum-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  box-shadow: var(--forum-shadow);
 }
-.message { 
-    padding: .5rem; margin-bottom: .5rem; border-radius: 3px; 
+
+.forum-form .form-control {
+  background: var(--card);
+  border-color: var(--border);
 }
-.message.success { 
-    background: #d4edda; color: #155724; 
+
+.forum-form .form-control:focus {
+  box-shadow: 0 0 0 0.25rem rgba(21, 33, 59, 0.25);
 }
-.message.error { 
-    background: #f8d7da; color: #721c24; 
+
+.toast {
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  background: var(--card);
+}
+
+.toast .btn-close {
+  filter: invert(0.7);
 }
