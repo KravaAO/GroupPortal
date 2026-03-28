@@ -3,6 +3,12 @@ from django.db import models
 
 
 class Profile(models.Model):
+    LEVEL_CHOICES = [
+        ("beginner", "Початковий"),
+        ("intermediate", "Середній"),
+        ("advanced", "Продвинутий"),
+    ]
+
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -10,6 +16,7 @@ class Profile(models.Model):
     )
     avatar = models.ImageField(upload_to="pictures/", blank=True, null=True)
     bio = models.TextField(max_length=200, blank=True, null=True)
+    level = models.CharField(max_length=20, choices=LEVEL_CHOICES, blank=True)
 
     @property
     def avatar_url(self):

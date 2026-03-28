@@ -1,4 +1,4 @@
 body {
-    background: radial-gradient(circle, rgb(85, 99, 131), rgb(59, 69, 92), rgb(33, 39, 53));
+    background: radial-gradient(rgb(55, 45, 110), rgb(40, 35, 80), rgb(25, 25, 60));
     min-height: 100vh;
 }

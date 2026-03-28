@@ -9,20 +9,21 @@ from .forms import SocialLinkForm
 
 
 @login_required
-def my_portfolio_view(request):
-    profile, _ = Profile.objects.get_or_create(user=request.user)
-    social_links = SocialLink.objects.filter(user=request.user)
-    portfolio_user = {
-        "username": request.user.username,
-        "date_joined": request.user.date_joined,
-        "profile": profile,
-    }
+def users_list_view(request):
+    users = User.objects.all().select_related("portfolio_profile")
 
-    return render(
-        request,
-        "profile/portfolio.html",
-        {"user": portfolio_user, "social_links": social_links},
-    )
+    users_data = []
+    for user in users:
+        profile, _ = Profile.objects.get_or_create(user=user)
+        users_data.append(
+            {
+                "username": user.username,
+                "profile": profile,
+                "email": user.email,
+            }
+        )
+
+    return render(request, "profile/main_page.html", {"users": users_data})
 
 
 def portfolio_view(request, username):
@@ -40,6 +41,8 @@ def portfolio_view(request, username):
         "profile/portfolio.html",
         {"user": portfolio_user, "social_links": social_links},
     )
+
+
 @login_required
 def settings_view(request):
     profile, _ = Profile.objects.get_or_create(user=request.user)
@@ -65,6 +68,11 @@ def settings_view(request):
         if "update_bio" in request.POST:
             profile.bio = request.POST.get("bio", "")
             profile.save(update_fields=["bio"])
+            return redirect("settings")
+
+        if "update_level" in request.POST:
+            profile.level = request.POST.get("level", "")
+            profile.save(update_fields=["level"])
             return redirect("settings")
 
         if "add_social" in request.POST:

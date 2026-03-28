@@ -1,5 +1,5 @@
 body {
-    background: radial-gradient(circle, rgb(53, 86, 155), rgb(41, 65, 117), rgb(29, 44, 79));
+    background: radial-gradient(rgb(55, 45, 110), rgb(40, 35, 80), rgb(25, 25, 60));
     min-height: 100vh;
 }
 
@@ -43,24 +43,6 @@ body {
 }
 
 
-.posts-section {
-    margin-top: 2rem;
-}
-
-.posts-header {
-    color: #333;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.posts-count {
-    font-size: 0.9rem;
-    color: #666;
-}
-
 
 .alert-info {
     background-color: #e7f3ff;
@@ -98,4 +80,25 @@ body {
         padding: 0.35rem 0.6rem;
         font-size: 0.8rem;
     }
+}
+
+
+.badge {
+    padding: 8px 14px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: black !important;
+}
+
+.level-beginner {
+    background: #28a745;
+}
+
+.level-intermediate {
+    background: #ffc107;
+}
+
+.level-advanced {
+    background: #dc3545;
 }

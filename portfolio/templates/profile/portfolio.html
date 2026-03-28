@@ -1,33 +1,46 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% block extra_css %}
+<link rel="stylesheet" href="{% static 'profile/portfolio.css' %}">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="{% static 'profile/portfolio.css' %}">
 {% endblock %}
 {% block content %}
 
-<div class="container mt-5">
+<p class="text-center fs-1 mt-4 mb-4 " style="color: #000000;">Інформація про користувача</p>
+<div class="container mt-5  ">
     <div class="row justify-content-center">
         <div class="col-lg-9">
-            <div class="card shadow-lg p-4" style="background-color: rgb(112, 138, 255);">
+            <div class="card shadow-lg p-4 " style="background-color: rgb(85, 75, 180); ">
                 <div class="row align-items-center">
                     <div class="col-md-4 text-center ">
-                        <img src="{{ portfolio_profile.avatar_url }}" class="rounded-circle mb-3" width="150"
-                            height="150" style="object-fit: fill;">
+                        <img src="{{ user.profile.avatar_url }}" class="rounded-circle mb-3" width="150" height="150"
+                            style="object-fit: fill;">
 
-                        <h5 class="mt-2">{{ portfolio_profile.user.username }}</h5>
-
-
+                        <h5 class="mt-2">{{ user.username }}</h5>
 
                     </div>
-                    <hr class="my-4">
-                    <div class="col-md-8 ps-4 border-start">
-                        <h4 class="mb-3 fs-3" style="text-align: center;">Інформація про користувача
-                        </h4>
+
+                    <div class="col-md-8 ps-4 border-start border-dark border-2">
 
                         <h4>Про себе:</h4>
-                        <p>{{ portfolio_profile.bio|default:"Користувач не додав інформацію про себе." }}</p>
+                        <p class="opacity-75">{{ user.profile.bio|default:"Користувач не додав інформацію про себе." }}
+                        </p>
+
+                        <h4 class="mt-4">Рівень програмування:</h4>
+
+                        {% if user.profile.level == "beginner" %}
+                        <span class="badge level-beginner">🟢 Початковий</span>
+
+                        {% elif user.profile.level == "intermediate" %}
+                        <span class="badge level-intermediate">🟡 Середній</span>
+
+                        {% elif user.profile.level == "advanced" %}
+                        <span class="badge level-advanced">🔴 Просунутий</span>
+
+                        {% else %}
+                        <span class="text-muted">Користувач не вказав рівень</span>
+                        {% endif %}
 
                         <h4 class="mt-4">Соцмережі:</h4>
                         <div class="social-icons mb-3 mt-3">
@@ -40,7 +53,7 @@
                             {% endfor %}
                         </div>
                         <p><strong>Дата реєстрації:</strong>
-                            {{ portfolio_profile.user.date_joined|date:"d.m.Y" }}
+                            {{ user.date_joined|date:"d.m.Y" }}
                         </p>
                     </div>
                 </div>
