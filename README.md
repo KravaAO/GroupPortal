@@ -7,7 +7,7 @@
 ![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
 
 
-## Project Overview
+
 
 **GroupPortal** is a collaborative web application built with Django designed to provide:
 - Authenticated user profiles
